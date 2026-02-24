@@ -37,14 +37,33 @@ def simple_calculator(operation: str, num1: float, num2: float) -> float:
     else:
         raise ValueError("Invalid operation. Please choose from 'add', 'subtract', 'multiply', or 'divide'.")
 
+
+def sanitize_num(num_str: str) -> float:
+    """
+    Function that takes a string input and attempts to convert it to a float. If the conversion fails,
+    it raises a ValueError.
+
+    Args:
+        num_str (str): The string input to convert.
+
+    Returns:
+        float: The converted float value.
+    """
+    try:
+        return float(num_str)
+    except ValueError:
+        raise ValueError(f"Invalid number: {num_str}. Please enter a valid number.")
+
 def main():
     
     print(f"===== Simple Calculator =====")
 
-    # Ask the user for sample input    
-    num1 = float(input("Enter the first number: "))
-    num2 = float(input("Enter the second number: "))
+    # Ask the user for sample input
+    num1 = sanitize_num(input("Enter the first number: "))
+    num2 = sanitize_num(input("Enter the second number: "))
     operation = input("Enter the operation (add, subtract, multiply, divide): ").strip().lower()
+    if operation not in ["add", "subtract", "multiply", "divide"]:
+        raise ValueError("Invalid operation. Please choose from 'add', 'subtract', 'multiply', or 'divide'.")
 
     # Perform the calculation and display the result
     result = simple_calculator(operation, num1, num2)
